@@ -104,6 +104,8 @@
             font-weight: bold;
             cursor: pointer;
         }
+
+        
     </style>
 </head>
 <body>
@@ -213,6 +215,19 @@
             font-weight: bold;
             cursor: pointer;
         }
+
+        .nav {
+    position: absolute;
+    top: 50%;
+    font-size: 40px;
+    color: white;
+    cursor: pointer;
+    user-select: none;
+}
+
+.prev { left: 20px; }
+.next { right: 20px; }
+
     </style>
 </head>
 <body>
@@ -268,10 +283,19 @@
             <img src="https://en.bcdn.biz/Images/2024/4/12/1724864b-dece-424f-b827-b283dc67759a.jpg" alt="Kingfisher" loading="lazy">
             <div class="overlay"><div class="overlay-text"><h3>Green Broadbill</h3></div></div>
         </div>
-
-
-        
+   
     </div>
+
+    <div id="imageModal" class="modal">
+    <span class="close" onclick="closeModal()">&times;</span>
+
+    <span class="nav prev" onclick="changeImage(-1)">&#10094;</span>
+
+    <img id="modalImage" src="" alt="Full image">
+
+    <span class="nav next" onclick="changeImage(1)">&#10095;</span>
+</div>
+
     
     <!-- Lightbox Modal -->
     <div id="imageModal" class="modal" onclick="closeModal()">
@@ -298,6 +322,34 @@
                 closeModal();
             }
         }
+
+        let images = document.querySelectorAll(".gallery-item img");
+let currentIndex = 0;
+
+function openModal(element) {
+    document.getElementById("imageModal").style.display = "flex";
+    currentIndex = Array.from(images).indexOf(element.querySelector("img"));
+    document.getElementById("modalImage").src = images[currentIndex].src;
+}
+
+function closeModal() {
+    document.getElementById("imageModal").style.display = "none";
+}
+
+function changeImage(step) {
+    currentIndex = currentIndex + step;
+
+    if (currentIndex < 0) {
+        currentIndex = images.length - 1;
+    }
+    if (currentIndex >= images.length) {
+        currentIndex = 0;
+    }
+
+    document.getElementById("modalImage").src = images[currentIndex].src;
+}
+
     </script>
 </body>
 </html>
+
